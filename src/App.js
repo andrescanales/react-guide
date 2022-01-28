@@ -34,15 +34,8 @@ class App extends Component {
   }
 
   togglePersonsHandler = () => {
-    if (this.state.showPersons){
-      this.setState({ showPersons: false })
-    } else {
-      this.setState({ showPersons: true })
-    }
-    /* Another way of doing the conditional:
       const doesShow = this.state.showPersons
       this.setState({ showPersons: !doesShow })
-    */
   }
 
   render() {
@@ -52,6 +45,28 @@ class App extends Component {
       border: '1px solid blue',
       padding: '8px',
       cursor: 'pointer'
+    }
+
+    let persons = null;
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          <Person 
+            name={this.state.persons[2].name} 
+            age={this.state.persons[2].age}
+          />
+          <Person
+            name={this.state.persons[1].name}
+            changed={this.nameChangeHandler}
+          />
+          <Person 
+            name="Andres" 
+            age="34" 
+            click={this.switchNameHandler.bind(this, 'Rafael A.!')}>
+              My Hobbies are bjj
+          </Person>
+        </div>
+      );
     }
 
     return (
@@ -68,28 +83,10 @@ class App extends Component {
           style={style}
           onClick={this.togglePersonsHandler}
         >Toggle Persons</button>
-        { 
-          this.state.showPersons ?
-            <div>
-              <Person 
-                name={this.state.persons[2].name} 
-                age={this.state.persons[2].age}
-              />
-              <Person
-                name={this.state.persons[1].name}
-                changed={this.nameChangeHandler}
-              />
-              <Person 
-                name="Andres" 
-                age="34" 
-                click={this.switchNameHandler.bind(this, 'Rafael A.!')}>
-                  My Hobbies are bjj
-              </Person>
-            </div>
-            : null
-        }
+        { persons }
       </div>
     );
+    // return React.createElement('div', {className: 'App'})
   }
 }
 
