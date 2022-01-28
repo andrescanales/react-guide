@@ -1,25 +1,96 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Person from './Person/Person';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends Component {
+  state = {
+    persons: [
+      {name: 'Andres', age: 34},
+      {name: 'Mane', age: 34},
+      {name: 'Sofi', age: 3}
+    ],
+    otherState: 'some other value',
+    showPersons: false
+  }
+
+  switchNameHandler = (newName) => {
+    this.setState({
+      persons: [
+        {name: 'Andres', age: 34},
+        {name: 'Mane', age: 34},
+        {name: newName, age: 3}
+      ]
+    });
+  }
+
+  nameChangeHandler = (event) => {
+    this.setState({
+      persons: [
+        {name: 'Andres', age: 34},
+        {name: event.target.value, age: 34},
+        {name: 'Sofi', age: 3}
+      ]
+    });
+  }
+
+  togglePersonsHandler = () => {
+    if (this.state.showPersons){
+      this.setState({ showPersons: false })
+    } else {
+      this.setState({ showPersons: true })
+    }
+    /* Another way of doing the conditional:
+      const doesShow = this.state.showPersons
+      this.setState({ showPersons: !doesShow })
+    */
+  }
+
+  render() {
+    const style = {
+      backgorundColor: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+    }
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm react App</h1>
+        <button 
+          style={style}
+          onClick={ () => this.switchNameHandler('Sofía Renée') }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          Switch Name
+        </button>
+        <br/><br/>
+        <button 
+          style={style}
+          onClick={this.togglePersonsHandler}
+        >Toggle Persons</button>
+        { 
+          this.state.showPersons ?
+            <div>
+              <Person 
+                name={this.state.persons[2].name} 
+                age={this.state.persons[2].age}
+              />
+              <Person
+                name={this.state.persons[1].name}
+                changed={this.nameChangeHandler}
+              />
+              <Person 
+                name="Andres" 
+                age="34" 
+                click={this.switchNameHandler.bind(this, 'Rafael A.!')}>
+                  My Hobbies are bjj
+              </Person>
+            </div>
+            : null
+        }
+      </div>
+    );
+  }
 }
 
 export default App;
