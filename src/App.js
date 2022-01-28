@@ -5,9 +5,9 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      {name: 'Andres', age: 34},
-      {name: 'Mane', age: 34},
-      {name: 'Sofi', age: 3}
+      { id: 'asd', name: 'Andres', age: 34 },
+      { id: 'dsa', name: 'Mane', age: 34 },
+      { id: 'fsa', name: 'Sofi', age: 3 }
     ],
     otherState: 'some other value',
     showPersons: false
@@ -29,9 +29,10 @@ class App extends Component {
   }
 
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
-    // splice will first copy the original array &
-    // then remove the persons from the new array:
+    // const persons = this.state.persons.slice();
+    const persons = [...this.state.persons];
+    // splice will NOT copy the original array, so we use slice() or spread operator
+    // (...) to copy the original & then remove the persons from the new array:
     persons.splice(personIndex, 1)
     this.setState({ persons: persons })
   }
@@ -53,6 +54,7 @@ class App extends Component {
         <div>
           {this.state.persons.map((person, index) => {
             return <Person
+              key={person.id}
               name={person.name}
               age={person.age}
               click={() => this.deletePersonHandler(index)} />
