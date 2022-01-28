@@ -13,16 +13,6 @@ class App extends Component {
     showPersons: false
   }
 
-  switchNameHandler = (newName) => {
-    this.setState({
-      persons: [
-        {name: 'Andres', age: 34},
-        {name: 'Mane', age: 34},
-        {name: newName, age: 3}
-      ]
-    });
-  }
-
   nameChangeHandler = (event) => {
     this.setState({
       persons: [
@@ -38,6 +28,14 @@ class App extends Component {
       this.setState({ showPersons: !doesShow })
   }
 
+  deletePersonHandler = (personIndex) => {
+    const persons = this.state.persons;
+    // splice will first copy the original array &
+    // then remove the persons from the new array:
+    persons.splice(personIndex, 1)
+    this.setState({ persons: persons })
+  }
+
   render() {
     const style = {
       backgorundColor: 'white',
@@ -50,21 +48,15 @@ class App extends Component {
     let persons = null;
     if (this.state.showPersons) {
       persons = (
+        // All the content inside this parenthesis is JSX code
+        // except for the code inside curly braces
         <div>
-          <Person 
-            name={this.state.persons[2].name} 
-            age={this.state.persons[2].age}
-          />
-          <Person
-            name={this.state.persons[1].name}
-            changed={this.nameChangeHandler}
-          />
-          <Person 
-            name="Andres" 
-            age="34" 
-            click={this.switchNameHandler.bind(this, 'Rafael A.!')}>
-              My Hobbies are bjj
-          </Person>
+          {this.state.persons.map((person, index) => {
+            return <Person
+              name={person.name}
+              age={person.age}
+              click={() => this.deletePersonHandler(index)} />
+          })}
         </div>
       );
     }
