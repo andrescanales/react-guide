@@ -13,14 +13,22 @@ class App extends Component {
     showPersons: false
   }
 
-  nameChangeHandler = (event) => {
-    this.setState({
-      persons: [
-        {name: 'Andres', age: 34},
-        {name: event.target.value, age: 34},
-        {name: 'Sofi', age: 3}
-      ]
+  nameChangeHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      // returns boolean if condition
+      return p.id === id
     });
+    // Again we create a copy of the Obj, so we don't mutate the original
+    // Because JS objects are reference types, so it's just a pointer.
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons]
+    persons[personIndex] = person;
+
+    this.setState({ persons: persons });
   }
 
   togglePersonsHandler = () => {
@@ -29,10 +37,12 @@ class App extends Component {
   }
 
   deletePersonHandler = (personIndex) => {
+    // personIndex is an internal index the list use. Is not the index of the state.
+    console.log("...", personIndex)
     // const persons = this.state.persons.slice();
     const persons = [...this.state.persons];
-    // splice will NOT copy the original array, so we use slice() or spread operator
-    // (...) to copy the original & then remove the persons from the new array:
+    // slice() or spread operator(...) copy the original arry into a new one
+    // splice() changes the contents of an array by removing or replacing
     persons.splice(personIndex, 1)
     this.setState({ persons: persons })
   }
@@ -57,7 +67,8 @@ class App extends Component {
               key={person.id}
               name={person.name}
               age={person.age}
-              click={() => this.deletePersonHandler(index)} />
+              click={() => this.deletePersonHandler(index)}
+              changed={(event) => this.nameChangeHandler(event, person.id)}/>
           })}
         </div>
       );
