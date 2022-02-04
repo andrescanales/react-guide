@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import TextValidation from './ModulesAssigns/TextValidation';
 
 class App extends Component {
   state = {
@@ -10,12 +11,12 @@ class App extends Component {
       { id: 'fsa', name: 'Sofi', age: 3 }
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    textInput: ''
   }
 
   nameChangeHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(p => {
-      // returns boolean if condition
       return p.id === id
     });
     // Again we create a copy of the Obj, so we don't mutate the original
@@ -32,19 +33,26 @@ class App extends Component {
   }
 
   togglePersonsHandler = () => {
-      const doesShow = this.state.showPersons
-      this.setState({ showPersons: !doesShow })
+    const doesShow = this.state.showPersons
+    this.setState({ showPersons: !doesShow })
   }
 
   deletePersonHandler = (personIndex) => {
     // personIndex is an internal index the list use. Is not the index of the state.
     console.log("...", personIndex)
-    // const persons = this.state.persons.slice();
     const persons = [...this.state.persons];
     // slice() or spread operator(...) copy the original arry into a new one
     // splice() changes the contents of an array by removing or replacing
     persons.splice(personIndex, 1)
     this.setState({ persons: persons })
+  }
+
+  getTextInput = (event) => {
+    if (event.target.value.length >= 1) {
+      this.setState({ textInput: event.target.value })
+    } else {
+      this.setState({ textInput: '' })
+    }
   }
 
   render() {
@@ -59,8 +67,7 @@ class App extends Component {
     let persons = null;
     if (this.state.showPersons) {
       persons = (
-        // All the content inside this parenthesis is JSX code
-        // except for the code inside curly braces
+        // Content inside this parenthesis is JSX code except for the code inside brackets
         <div>
           {this.state.persons.map((person, index) => {
             return <Person
@@ -74,21 +81,30 @@ class App extends Component {
       );
     }
 
+    const inputAssignment = (
+      <div>
+        <input type="text" onChange={(event) => this.getTextInput(event)}/>
+      </div>
+    );
+
     return (
       <div className="App">
         <h1>Hi, I'm react App</h1>
         <button 
           style={style}
-          onClick={ () => this.switchNameHandler('Sofía Renée') }
-        >
+          onClick={ () => this.switchNameHandler('Sofía Renée') }>
           Switch Name
         </button>
         <br/><br/>
         <button 
           style={style}
-          onClick={this.togglePersonsHandler}
-        >Toggle Persons</button>
+          onClick={this.togglePersonsHandler}>
+          Toggle Persons
+        </button>
         { persons }
+        <br/><br/>
+        { inputAssignment }
+        <TextValidation text={this.state.textInput}></TextValidation>
       </div>
     );
     // return React.createElement('div', {className: 'App'})
