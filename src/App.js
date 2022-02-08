@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
 import TextValidation from './ModulesAssigns/TextValidation';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -71,12 +72,14 @@ class App extends Component {
         // Content inside this parenthesis is JSX code except for the code inside brackets
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person
-              key={person.id}
-              name={person.name}
-              age={person.age}
-              click={() => this.deletePersonHandler(index)}
-              changed={(event) => this.nameChangeHandler(event, person.id)}/>
+            // We moved the key prop to the HigherComponent
+            return <ErrorBoundary key={person.id}>
+              <Person
+                name={person.name}
+                age={person.age}
+                click={() => this.deletePersonHandler(index)}
+                changed={(event) => this.nameChangeHandler(event, person.id)}/>
+              </ErrorBoundary>
           })}
         </div>
       );
