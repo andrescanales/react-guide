@@ -57,7 +57,8 @@ class App extends Component {
 
   render() {
     const style = {
-      backgorundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
@@ -79,6 +80,8 @@ class App extends Component {
           })}
         </div>
       );
+
+      style.backgroundColor = 'red'
     }
 
     const inputAssignment = (
@@ -90,11 +93,6 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Hi, I'm react App</h1>
-        <button 
-          style={style}
-          onClick={ () => this.switchNameHandler('Sofía Renée') }>
-          Switch Name
-        </button>
         <br/><br/>
         <button 
           style={style}
