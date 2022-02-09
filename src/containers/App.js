@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from '../components/Persons/Person/Person';
+import Persons from '../components/Persons/Persons'
 import TextValidation from '../components/ModulesAssigns/TextValidation';
-import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -13,15 +12,14 @@ class App extends Component {
     ],
     otherState: 'some other value',
     showPersons: false,
-    textInput: ''
   }
 
   nameChangeHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(p => {
       return p.id === id
     });
-    // Again we create a copy of the Obj, so we don't mutate the original
-    // Because JS objects are reference types, so it's just a pointer.
+    // Create a copy of the Obj, so we don't mutate the original
+    // BC JS objects are reference types, so it's just a pointer.
     const person = {
       ...this.state.persons[personIndex]
     };
@@ -48,14 +46,6 @@ class App extends Component {
     this.setState({ persons: persons })
   }
 
-  getTextInput = (event) => {
-    if (event.target.value.length >= 1) {
-      this.setState({ textInput: event.target.value })
-    } else {
-      this.setState({ textInput: '' })
-    }
-  }
-
   render() {
     const style = {
       backgroundColor: 'green',
@@ -69,29 +59,17 @@ class App extends Component {
     let persons = null;
     if (this.state.showPersons) {
       persons = (
-        // Content inside this parenthesis is JSX code except for the code inside brackets
+        // Content inside the () is JSX code except for the code inside brackets
         <div>
-          {this.state.persons.map((person, index) => {
-            // We moved the key prop to the HigherComponent
-            return <ErrorBoundary key={person.id}>
-              <Person
-                name={person.name}
-                age={person.age}
-                click={() => this.deletePersonHandler(index)}
-                changed={(event) => this.nameChangeHandler(event, person.id)}/>
-              </ErrorBoundary>
-          })}
+          <Persons
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangeHandler}/>
         </div>
       );
 
       style.backgroundColor = 'red'
     }
-
-    const inputAssignment = (
-      <div>
-        <input type="text" onChange={(event) => this.getTextInput(event)}/>
-      </div>
-    );
 
     return (
       <div className="App">
@@ -103,9 +81,9 @@ class App extends Component {
           Toggle Persons
         </button>
         { persons }
-        <br/><br/>
-        { inputAssignment }
-        <TextValidation text={this.state.textInput}></TextValidation>
+        <br/><br/><hr/>
+        <h3>Assignments</h3>
+        <TextValidation />
       </div>
     );
     // return React.createElement('div', {className: 'App'})
