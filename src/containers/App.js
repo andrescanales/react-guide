@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Persons from '../components/Persons/Persons'
+import Cockpit from '../components/Cockpit/Cockpit';
 import TextValidation from '../components/ModulesAssigns/TextValidation';
 
 class App extends Component {
@@ -47,14 +48,6 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    }
 
     let persons = null;
     if (this.state.showPersons) {
@@ -64,22 +57,17 @@ class App extends Component {
           <Persons
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
-            changed={this.nameChangeHandler}/>
+            changed={this.nameChangeHandler} />
         </div>
       );
-
-      style.backgroundColor = 'red'
     }
 
     return (
       <div className="App">
-        <h1>Hi, I'm react App</h1>
-        <br/><br/>
-        <button 
-          style={style}
-          onClick={this.togglePersonsHandler}>
-          Toggle Persons
-        </button>
+        <Cockpit
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.togglePersonsHandler} />
         { persons }
         <br/><br/><hr/>
         <h3>Assignments</h3>
