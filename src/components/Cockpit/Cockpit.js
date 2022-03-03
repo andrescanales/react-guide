@@ -16,7 +16,7 @@ const cockpit = (props) => {
 
   return(
     <div>
-      <h1>Hi, I'm react App</h1>
+      <h1>{props.title}</h1>
       <br/><br/>
       <button 
         style={style}
