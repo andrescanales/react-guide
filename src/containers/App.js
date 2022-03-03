@@ -5,6 +5,14 @@ import Cockpit from '../components/Cockpit/Cockpit';
 import TextValidation from '../components/ModulesAssigns/TextValidation';
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    console.log('[App.js] constructor');
+    // We can initialize the state here by doing this.state
+    // but the other way will automatically create the 
+    // constructor method for you.
+  }
+
   state = {
     persons: [
       { id: 'asd', name: 'Andres', age: 34 },
@@ -13,6 +21,16 @@ class App extends Component {
     ],
     otherState: 'some other value',
     showPersons: false,
+  }
+
+  // We need to add the static keyword, so React will not break
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps', props)
+    return state
+  }
+
+  componentDidMount(){
+    console.log('[App.js] componentDidMount')
   }
 
   nameChangeHandler = (event, id) => {
@@ -48,7 +66,7 @@ class App extends Component {
   }
 
   render() {
-
+    console.log('[App.js] render')
     let persons = null;
     if (this.state.showPersons) {
       persons = (
