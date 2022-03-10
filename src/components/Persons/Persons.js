@@ -20,12 +20,14 @@ class Persons extends Component {
 
   getSnapshotBeforeUpdate(prevProps, prevState){
     console.log('[Persons.js] getSnapshotBeforeUpdate')
-    // This is the way to use this method
+    // We can use this method to save some data before the Update
     return {message: 'Snapshot'};
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
     console.log('[Persons.js] componentDidUpdate')
+    // Then in here we can use the snapshot param to get the saved 
+    // data after the component updates.
     console.log(snapshot)
   }
 
