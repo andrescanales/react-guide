@@ -11,18 +11,31 @@ const Cockpit = (props) => {
     // It's componentDidMount & componentDidUpdate combined
     // http request in here...
     setTimeout(() => {
-      // Faking an http request to check an issue of making
-      // that type of calls in this method. And that is that 
+      // Faking an http request to check an issue of this
       // will be executed every time it re-renders.
       alert('Saved data to cloud!');
     }, 1000);
-    // To fix this issue we pass a 2nd arg to useEffect func
-    // in which we kind of let the func know which data is 
-    // being used in your effect. In this case we only want 
-    // to run this call when props.persons changes:
-  }, [props.persons]);
-  // What if we want to run this effect ONLY the first time
-  // it loads? Then we simply leave an empty array.
+    // We can also replicate the cleaning process of 
+    // componentWillUnmount
+    return () => {
+      console.log('[Cockpit.js] cleanup work in useEffect')
+    }
+    // To fix the http issue we pass a 2nd arg to useEffect
+    // in which we let the func know which data is being
+    // used in your effect. In this case we only want 
+    // to run this call when [props.persons] changes.
+    // If we want to run this effect ONLY the first time
+    // it loads then we simply leave an empty array:
+  }, []);
+
+  // Using a 2nd useEffect to demonstrate the cleanup process
+  // every time it runs render cycle.
+  useEffect(() => {
+    console.log('[Cockpit.js] 2nd useEffect');
+    return () => {
+      console.log('[Cockpit.js] cleanup work in 2nd useEffect')
+    }
+  })
 
   const style = {
     backgroundColor: 'green',

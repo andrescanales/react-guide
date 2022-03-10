@@ -4,10 +4,10 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 // const persons = (props) => (
 class Persons extends Component {
-  static getDerivedStateFromProps(props, state){
-    console.log('[Persons.js] getDerivedStateFromProps')
-    return state;
-  }
+  // static getDerivedStateFromProps(props, state){
+  //   console.log('[Persons.js] getDerivedStateFromProps')
+  //   return state;
+  // }
 
   shouldComponentUpdate(nextProps, nextState){
     console.log('[Persons.js] shouldComponentUpdate')
@@ -29,6 +29,10 @@ class Persons extends Component {
     // Then in here we can use the snapshot param to get the saved 
     // data after the component updates.
     console.log(snapshot)
+  }
+
+  componentWillUnmount(){
+    console.log('[Persons.js] componentWillUnmount')
   }
 
   render() {
