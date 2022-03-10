@@ -15,7 +15,11 @@ class Persons extends Component {
     // true if React should continue updating, false otherwise.
     // Obviouslly this will occurr while doing a validation in 
     // this.props to the upcoming nextProps.
-    return true;
+    if(nextProps.persons !== this.props.persons) {
+      return true
+    } else {
+      return false
+    }
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState){
