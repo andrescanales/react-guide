@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit';
-import WithClass from '../hoc/WithClass';
+// Changing to lowercase bc it's not a component anymore it's a function:
+import withClass from '../hoc/withClass';
+import Aux from '../hoc/Aux';
 import TextValidation from '../components/ModulesAssigns/TextValidation';
 
 class App extends Component {
@@ -92,7 +94,7 @@ class App extends Component {
     }
 
     return (
-      <WithClass classes={"App"}>
+      <Aux>
         <button
           onClick={() => {
             this.setState({ showCockpit: false });
@@ -111,10 +113,10 @@ class App extends Component {
         <br/><br/><hr/>
         <h3>Assignments</h3>
         <TextValidation />
-      </WithClass>
+      </Aux>
     );
     // return React.createElement('div', {className: 'App'})
   }
 }
-
-export default App;
+// Here we wrapped everything into the new HOC tha's simply a func
+export default withClass(App, "App");

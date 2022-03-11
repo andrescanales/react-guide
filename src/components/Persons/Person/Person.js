@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import './Person.css'
+import classes from './Person.css'
+import withClass from '../../../hoc/withClass';
 import Aux from '../../../hoc/Aux';
 // Using a higher order component just to avoid the need
 // of using a HTML tag wrapping all the JSX code
@@ -23,4 +24,4 @@ class Person extends Component {
 }
 
 
-export default Person;
+export default withClass(Person, classes.Person);
