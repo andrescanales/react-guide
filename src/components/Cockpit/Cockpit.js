@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 // useEffect is a React Hook that lets you perform 
 // side effects in function components
 
@@ -37,6 +37,16 @@ const Cockpit = (props) => {
     }
   })
 
+  // useRef is another React Hook that will help us to replicate
+  // refs functionality we use in class based components.
+  const toggleBtnRef = useRef(null);
+
+  // Then we apply the action we want to do to our ref ideally
+  // in another useEffect() so it happens after renders:
+  useEffect(() => {
+    toggleBtnRef.current.click();
+  },[]);
+
   const style = {
     backgroundColor: 'green',
     color: 'white',
@@ -54,7 +64,8 @@ const Cockpit = (props) => {
     <div>
       <h1>{props.title}</h1>
       <br/><br/>
-      <button 
+      <button
+        ref={toggleBtnRef}
         style={style}
         onClick={props.clicked}>
         Toggle Persons
