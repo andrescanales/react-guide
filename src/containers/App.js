@@ -25,6 +25,7 @@ class App extends Component {
     otherState: 'some other value',
     showPersons: false,
     showCockpit: true,
+    changeCounter: 0,
   }
 
   // We need to add the static keyword, so React will not break
@@ -60,7 +61,14 @@ class App extends Component {
     const persons = [...this.state.persons]
     persons[personIndex] = person;
 
-    this.setState({ persons: persons });
+    // When you're depending to an old state to update the current
+    // best approach of doing is using setState with an arrow func:
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      }
+    });
   }
 
   togglePersonsHandler = () => {
