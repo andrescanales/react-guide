@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
 import TextValidation from '../components/ModulesAssigns/TextValidation';
 
 class App extends Component {
@@ -91,7 +92,7 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
+      <WithClass classes={"App"}>
         <button
           onClick={() => {
             this.setState({ showCockpit: false });
@@ -110,7 +111,7 @@ class App extends Component {
         <br/><br/><hr/>
         <h3>Assignments</h3>
         <TextValidation />
-      </div>
+      </WithClass>
     );
     // return React.createElement('div', {className: 'App'})
   }
