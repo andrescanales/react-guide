@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes, { func } from 'prop-types'
+
 import classes from './Person.css'
 import withClass from '../../../hoc/withClass';
 import Aux from '../../../hoc/Aux';
@@ -12,16 +14,28 @@ class Person extends Component {
     return (
       <Aux>
       {/* {<div className="Person">} */}
-        <p onClick={this.props.click}>I'm a {this.props.name} and I am {this.props.age} years old!</p>
+        <p onClick={this.props.click}>
+          I'm a {this.props.name} and I am {this.props.age} years old!
+        </p>
         {/* props.children is used to display whatever info is included in
           the opening and closing tags when invoking a component. */} 
         <p>{this.props.children}</p>
-        <input type="text" onChange={this.props.changed} value={this.props.name}/>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
       {/* {</div>} */}
       </Aux>
     )
   }
 }
 
+Person.propsTypes = {
+  click: PropTypes.func,
+  name: PropTypes.string,
+  age: PropTypes.number,
+  changed: PropTypes.func,
+};
 
 export default withClass(Person, classes.Person);
