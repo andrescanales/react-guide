@@ -63,4 +63,5 @@ const Cockpit = (props) => {
   );
 };
 
-export default Cockpit
+// React memoization tool:
+export default React.memo(Cockpit)
