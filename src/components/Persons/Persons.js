@@ -1,26 +1,32 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Person from './Person/Person';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-// const persons = (props) => (
-class Persons extends Component {
+// PureComponent will internally perform all the props checks
+// just like we did in shouldComponentUpdate:
+class Persons extends PureComponent {
   // static getDerivedStateFromProps(props, state){
   //   console.log('[Persons.js] getDerivedStateFromProps')
   //   return state;
   // }
 
-  shouldComponentUpdate(nextProps, nextState){
-    console.log('[Persons.js] shouldComponentUpdate')
-    // We need to return true or false, no matter what.
-    // true if React should continue updating, false otherwise.
-    // Obviouslly this will occurr while doing a validation in 
-    // this.props to the upcoming nextProps.
-    if(nextProps.persons !== this.props.persons) {
-      return true
-    } else {
-      return false
-    }
-  }
+  // Commenting this as we don't to make this unnecessary checks:
+  // shouldComponentUpdate(nextProps, nextState){
+  //   console.log('[Persons.js] shouldComponentUpdate')
+  //   // We need to return true or false, no matter what.
+  //   // true if React should continue updating, false otherwise.
+  //   // Obviouslly this will occurr while doing a validation in 
+  //   // this.props to the upcoming nextProps.
+  //   if(
+  //     nextProps.persons !== this.props.persons ||
+  //     nextProps.changed !== this.props.changed ||
+  //     nextProps.clicked !== this.props.clicked
+  //     ) {
+  //     return true
+  //   } else {
+  //     return false
+  //   }
+  // }
 
   getSnapshotBeforeUpdate(prevProps, prevState){
     console.log('[Persons.js] getSnapshotBeforeUpdate')
