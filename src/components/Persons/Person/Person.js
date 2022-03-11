@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes, { func } from 'prop-types'
+import PropTypes from 'prop-types'
 
 import classes from './Person.css'
 import withClass from '../../../hoc/withClass';
@@ -9,6 +9,18 @@ import Aux from '../../../hoc/Aux';
 
 // const person = (props) => {
 class Person extends Component {
+  constructor(props){
+    super(props)
+    // New way of using refs in React:
+    this.inputElementRef = React.createRef()
+  }
+
+  componentDidMount(){
+    // Older version of using refs:
+    // this.inputElement.focus();
+    this.inputElementRef.current.focus()
+  }
+
   render() {
     console.log('[Person.js] rendering...')
     return (
@@ -22,6 +34,9 @@ class Person extends Component {
         <p>{this.props.children}</p>
         <input
           type="text"
+          // Older version of using refs:
+          // ref={(inputEl)=> {this.inputElement = inputEl}}
+          ref={this.inputElementRef}
           onChange={this.props.changed}
           value={this.props.name}
         />
