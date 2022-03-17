@@ -5,6 +5,7 @@ import Cockpit from '../components/Cockpit/Cockpit';
 // Changing to lowercase bc it's not a component anymore it's a function:
 import withClass from '../hoc/withClass';
 import Aux from '../hoc/Aux';
+import AuthContext from '../context/auth-context';
 import TextValidation from '../components/ModulesAssigns/TextValidation';
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
     showPersons: false,
     showCockpit: true,
     changeCounter: 0,
+    authenticated: false,
   }
 
   // We need to add the static keyword, so React will not break
@@ -86,6 +88,10 @@ class App extends Component {
     this.setState({ persons: persons })
   }
 
+  loginHandler = () => {
+    this.setState({authenticated: true})
+  }
+
   render() {
     console.log('[App.js] render')
     let persons = null;
@@ -96,7 +102,9 @@ class App extends Component {
           <Persons
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
-            changed={this.nameChangeHandler} />
+            changed={this.nameChangeHandler}
+            // isAuthenticated is pass to Persons which is then fwd to Person
+            isAuthenticated={this.state.authenticated} />
         </div>
       );
     }
@@ -109,15 +117,22 @@ class App extends Component {
           }}>
             Remove Cockpit to check clean effect
         </button>
-        {this.state.showCockpit ?
-          <Cockpit
-            title={this.props.appTitle}
-            showPersons={this.state.showPersons}
-            persons={this.state.persons}
-            clicked={this.togglePersonsHandler} />
-            : null
-        }
-        { persons }
+        <AuthContext.Provider 
+          value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler
+          }}
+        >
+          {this.state.showCockpit ? (
+            <Cockpit
+              title={this.props.appTitle}
+              showPersons={this.state.showPersons}
+              persons={this.state.persons}
+              clicked={this.togglePersonsHandler}
+             />
+          ) : null}
+          { persons }
+        </AuthContext.Provider>
         <br/><br/><hr/>
         <h3>Assignments</h3>
         <TextValidation />

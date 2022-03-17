@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react"
 // useEffect is a React Hook that lets you perform 
 // side effects in function components
+import AuthContext from "../../context/auth-context";
 
 const Cockpit = (props) => {
   // useEffect method as default takes a method that
@@ -70,6 +71,13 @@ const Cockpit = (props) => {
         onClick={props.clicked}>
         Toggle Persons
       </button>
+      <AuthContext.Consumer>
+        {(context) =>
+          <button onClick={context.login}>
+            Log in
+          </button>
+        }
+      </AuthContext.Consumer>
     </div>
   );
 };

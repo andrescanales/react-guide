@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 
 import classes from './Person.css'
 import withClass from '../../../hoc/withClass';
 import Aux from '../../../hoc/Aux';
+import AuthContext from '../../../context/auth-context';
 // Using a higher order component just to avoid the need
 // of using a HTML tag wrapping all the JSX code
 
@@ -25,6 +26,11 @@ class Person extends Component {
     console.log('[Person.js] rendering...')
     return (
       <Aux>
+        <AuthContext.Consumer>
+        { context =>
+          context.authenticated ? <p>Authenticated</p> : <p>Please log in</p>
+        }
+        </AuthContext.Consumer>
       {/* {<div className="Person">} */}
         <p onClick={this.props.click}>
           I'm a {this.props.name} and I am {this.props.age} years old!
