@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useContext } from "react"
 // useEffect is a React Hook that lets you perform 
 // side effects in function components
 import AuthContext from "../../context/auth-context";
@@ -42,6 +42,11 @@ const Cockpit = (props) => {
   // refs functionality we use in class based components.
   const toggleBtnRef = useRef(null);
 
+  // Using React context in a functional component by using hooks
+  // useContext()
+  const authContext = useContext(AuthContext);
+  console.log(authContext.authenticated);
+
   // Then we apply the action we want to do to our ref ideally
   // in another useEffect() so it happens after renders:
   useEffect(() => {
@@ -71,13 +76,9 @@ const Cockpit = (props) => {
         onClick={props.clicked}>
         Toggle Persons
       </button>
-      <AuthContext.Consumer>
-        {(context) =>
-          <button onClick={context.login}>
-            Log in
-          </button>
-        }
-      </AuthContext.Consumer>
+      <button onClick={authContext.login}>
+        Log in
+      </button>
     </div>
   );
 };
